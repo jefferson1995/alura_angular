@@ -1,5 +1,8 @@
 <section class="container criar-pensamentos ff-inter">
   <header class="header">
+    <div class="paginaAtiva" routerLink="/criarPensamento" routerLinkActive="active">
+      <h3>Criar pensamento active</h3>
+    </div>
     <h2>Adicione um <br> pensamento novo:</h2>
   </header>
   <form>
@@ -90,7 +93,7 @@
 
     <div class="acoes">
       <button (click)="criarPensamento()" ) class="botao">Salvar</button>
-      <button (click)="cancelarPensamento()" ) class="botao">Cancelar</button>
+      <button routerLink="/listarPensamento" (click)="cancelarPensamento()" ) class="botao">Cancelar</button>
     </div>
 
   </form>

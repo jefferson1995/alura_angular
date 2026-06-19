@@ -102,3 +102,33 @@ resumo
 - Escutar eventos do template e fazer a chamada de métodos no component com o event binding;
 - Usar a diretiva ngModel que pertence ao FormsModule para a comunicação bidirecional entre component e template;
 - Como funcionam os diferentes tipos de comunicação entre component e template.
+
+
+# Aula 03: Navegação com roteamento
+
+
+- Configurações de rotas 
+
+Nesta aula, você aprendeu a configurar as rotas da sua aplicação Angular. A instrutora mostrou como modificar o arquivo app-routing.module.ts, que foi gerado automaticamente quando você criou o projeto com o comando ng new e respondeu "sim" à pergunta sobre adicionar o arquivo de rotas.
+
+Você viu que a constante routes é um array de objetos, onde cada objeto representa uma rota. Para cada rota, você configurou um path (caminho) e o component (componente) correspondente que será exibido.
+
+Por exemplo, para a rota de criação de pensamentos, você configurou:
+
+{
+path: 'criarPensamento',
+component: CriarPensamentoComponent
+}
+Também foi configurada uma rota para a página inicial (path: ''), que redireciona para a rota listarPensamento usando redirectTo e pathMatch: 'full', garantindo que toda a URL seja considerada para o redirecionamento.
+
+Ao final da aula, você conseguiu acessar os diferentes componentes digitando as URLs diretamente no navegador, como "http://localhost:4200/criarPensamento" ou "http://localhost:4200/listarPensamento". A instrutora mencionou que, embora as rotas estejam configuradas, a navegação manual não é ideal para o usuário, e a próxima etapa será aprender a navegar entre os componentes de forma mais eficiente.
+
+- Navegação com routerLink 
+    Vimos como adicionar o routerLink a um botão, especificando o path da rota para a qual queremos navegar. No exemplo da aula, configuramos o botão "Adicionar pensamento" para redirecionar para a página do formulário de inclusão de pensamentos, usando o path /criarPensamento.
+    Para saber mais como usar pagina que esta ativada: https://drive.google.com/file/d/1jzdCd-LZwng_bdhmitCcoPF7TLKKKDSW/view?usp=drive_link
+
+Nesta aula:
+- Utilizar o RouterModule;
+- Utilizar a diretiva <router-outlet>;
+- Criar e configurar rotas;
+- Navegar por meio da propriedade routerLink.

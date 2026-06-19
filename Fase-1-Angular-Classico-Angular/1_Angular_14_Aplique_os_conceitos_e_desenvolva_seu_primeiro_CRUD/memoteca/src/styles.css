@@ -23,6 +23,7 @@ h2 {
   text-align: center;
 }
 
+
 .header {
   margin: 1rem auto 2rem;
 }
@@ -72,4 +73,10 @@ h2 {
   .container {
     width: 1140px;
   }
+}
+
+.paginaAtiva.active {
+  border-bottom: 5px solid white;
+  color: red;
+  transition: 300ms ease-in;
 }
