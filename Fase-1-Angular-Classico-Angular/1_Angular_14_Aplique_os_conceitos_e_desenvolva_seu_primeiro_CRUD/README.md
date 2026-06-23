@@ -132,3 +132,66 @@ Nesta aula:
 - Utilizar a diretiva <router-outlet>;
 - Criar e configurar rotas;
 - Navegar por meio da propriedade routerLink.
+
+
+# Aula 04 - Diretivas
+
+
+Listando com *ngFor
+
+ 
+- Configurar o botão "Cancelar": Foi adicionado um routerLink ao botão "Cancelar" na página de criação de pensamentos, que agora redireciona para a página de listagem (/listarPensamento) após o clique, além de exibir um alert.
+- Criar o componente pensamento: Para exibir os pensamentos de forma padronizada, foi criado um novo componente chamado pensamento.
+- Estilizar o componente pensamento: O arquivo pensamento.component.css recebeu estilos prontos para formatar a aparência do cartão de pensamento.
+- Definir a estrutura do componente pensamento: No pensamento.component.ts, foi criado um objeto pensamento com conteudo, autoria e modelo para teste.
+- Construir o HTML do componente pensamento: No pensamento.component.html, foi criada uma div principal com classes para estilização e interpolação para exibir o conteúdo, autoria e o modelo do pensamento, incluindo imagens de aspas e botões de editar e excluir.
+- Integrar o componente pensamento na listagem: O seletor app-pensamento foi adicionado ao listar-pensamento.html dentro de uma div com a classe "mural", para exibir um pensamento de teste.
+- Introduzir a diretiva *ngFor: Para listar múltiplos pensamentos, foi apresentada a diretiva estrutural *ngFor.
+- Preparar a lista de pensamentos: No listar-pensamento.component.ts, foi criado um atributo listaPensamentos inicializado como um array vazio.
+- Aplicar o *ngFor: A diretiva *ngFor="let pensamento of listaPensamentos" foi aplicada a uma div que envolve o seletor app-pensamento no listar-pensamento.html, com o objetivo de iterar sobre a lista de pensamentos.
+
+Comunicação entre os componentes
+
+- comunicação entre componentes no Angular, especificamente como um componente "pai" (listar-pensamento) pode passar informações para um componente "filho" (app-pensamento).
+- Vimos que para o componente filho receber dados, precisamos usar o decorador @Input() na propriedade que receberá a informação, dentro do arquivo .ts do componente filho. Isso indica que essa propriedade espera receber valores de fora.
+- Em seguida, no template HTML do componente pai, utilizamos um Property Binding (com colchetes []) para ligar a propriedade do componente filho (que está com @Input) à variável local do pai que contém os dados a serem passados. No nosso exemplo, foi [pensamento]="pensamento".
+- Com isso, o componente filho (app-pensamento) consegue exibir os dados recebidos do pai, atuando como um "dumb component" (componente burro), que apenas recebe e exibe informações, sem ter sua própria lógica de dados. Essa característica o torna reutilizável em diferentes partes da aplicação.
+
+
+Condições com *NgIf
+
+- diretiva estrutural ngIf do Angular, que funciona como um comando If para exibir ou ocultar elementos HTML.
+- A instrutora mostrou como usar o ngIf para exibir uma mensagem de "Ainda não há pensamentos cadastrados!" na página "Meu Mural" quando a lista de pensamentos estiver vazia. Para isso, foi utilizada uma expressão booleana dentro do ngIf para verificar se a listaPensamentos.length é maior que 0.
+- ´Além disso, você viu como usar o else em conjunto com o ngIf, importando um ng-template para definir o conteúdo a ser exibido quando a condição do ngIf for falsa.
+- Em resumo, a aula focou em como usar o ngIf para controlar a renderização de elementos na sua aplicação, melhorando a experiência do usuário.
+
+Estilizando com ngClass
+
+- Nesta aula, aprendemos sobre a diretiva ngClass no Angular, que nos permite aplicar estilos CSS de forma condicional. A instrutora usou a analogia de mudar o estilo de roupa de acordo com o tempo para explicar a ideia de estilos condicionais.
+- Vimos como usar o ngClass para alterar a largura dos cartões de pensamento no projeto. Para isso, acessamos o pensamento.component.ts e criamos um método chamado larguraPensamento() que retorna uma string ('pensamento-g' ou 'pensamento-p') baseada no tamanho do conteúdo do pensamento. No pensamento.component.html, substituímos a classe estática pela diretiva [ngClass]="larguraPensamento()", fazendo com que a largura do cartão seja definida dinamicamente.
+- Ao final, testamos a implementação adicionando pensamentos com diferentes tamanhos de conteúdo no listar-pensamento.component.ts e verificamos no navegador que os estilos foram aplicados corretamente.
+
+Para saber mais: tipos de diretivas: 
+
+Diretivas de componentes: usado com um modelo. Esse tipo de diretiva é a mais comum.
+
+Ex: <app-listarPensamentos>.
+
+Diretivas estruturais: altera o layout do DOM adicionando e removendo elementos DOM.
+
+Ex: NgIf, NgFor. NgSwitch.
+
+Diretivas de atributos: altera a aparência ou o comportamento de um elemento, componente ou outra diretiva.
+
+Ex: NgClass, NgStyle.
+
+
+resumo: 
+
+pontos importantes sobre as diretivas estruturais ngFor e ngIf, destacando sua função de incluir ou excluir elementos na página, além de mencionar o uso do ngClass para aplicar estilos dinamicamente, o que mostra que você está assimilando como manipular a estrutura e a aparência dos componentes. Também é interessante que você tenha mencionado a anotação @Input, que é fundamental para a comunicação entre componentes pai e filho, permitindo a passagem de dados de forma organizada.
+
+Para complementar, vale destacar que as diretivas estruturais como ngFor e ngIf não apenas adicionam ou removem elementos, mas também controlam a renderização condicional e a repetição de elementos com base em dados dinâmicos, o que torna a interface mais interativa e eficiente. Já o ngClass permite aplicar múltiplas classes CSS de forma condicional, facilitando a estilização responsiva e adaptativa dos componentes. Sobre a anotação @Input, ela é essencial para criar componentes reutilizáveis e modulares, pois permite que o componente filho receba dados do componente pai, promovendo uma arquitetura mais clara e organizada.
+
+Esses conceitos são fundamentais para construir aplicações Angular mais dinâmicas e escaláveis, e entender bem como usá-los vai facilitar muito o desenvolvimento dos seus projetos. Continue estudando e praticando!
+
+
