@@ -195,3 +195,190 @@ Para complementar, vale destacar que as diretivas estruturais como ngFor e ngIf 
 Esses conceitos são fundamentais para construir aplicações Angular mais dinâmicas e escaláveis, e entender bem como usá-los vai facilitar muito o desenvolvimento dos seus projetos. Continue estudando e praticando!
 
 
+# Aula 05: Comunicação com o Backend
+
+Versão do JSON-Server
+
+Mas é super importante que, para evitar incompatibilidades no código, você utilize a mesma versão que a instrutora.
+
+Para isso, no momento da instalação (em 1min45seg do vídeo), quando for utilizado o comando npm i json-server, adicione a versão específica na frente do comando, assim:
+
+JSON-Server
+
+comando para criar o arquivo packge.json dentro da pasta backend
+```bash
+npm init -y
+
+```
+
+Simulador de backend
+
+```bash
+npm i json-server@0.17.4
+```
+
+A aula aborda a importância da comunicação entre front-end e back-end para realizar operações de CRUD. Como o foco do curso é o front-end, você aprendeu a usar o JSON Server, uma ferramenta que simula uma API REST de forma simples.
+
+Os passos principais foram:
+
+Criar uma pasta chamada "backend" dentro do projeto MEMOTECA.
+
+Inicializar um projeto Node.js com o comando npm init -y, gerando um arquivo package.json.
+
+Instalar o JSON Server com npm i json-server@0.17.4.
+
+Criar um arquivo db.json contendo um objeto com um array de pensamentos, que servirá como banco de dados simulado.
+
+Modificar o script "start" no package.json para executar o comando json-server --watch db.json --port 3000, configurando a API para rodar na porta 3000.
+
+Executar npm start para iniciar o servidor e verificar que a API está funcionando acessando http://localhost:3000/pensamentos no navegador.
+
+Com isso, você tem uma API REST simulada pronta para ser consumida pela sua aplicação Angular. Na próxima aula, você aprenderá a fazer requisições HTTP para se comunicar com essa API.
+
+- Implementando interfaces
+
+A aula começa com uma analogia: assim como um aparelho elétrico de 220 volts só funciona em uma rede de 220 volts, e um plugue de três pinos não encaixa em uma tomada de dois encaixes, os dados enviados para o back-end também precisam respeitar um formato específico.
+
+O problema é que objetos possuem vários atributos, cada um com seu próprio formato. Se não padronizarmos, a base de dados fica desorganizada — por exemplo, datas podem ser escritas de várias formas diferentes (com barras, traços, abreviações de ano, etc.).
+
+Para garantir a integridade dos dados, você cria uma interface, que é um modelo de retorno da API. No Angular, chamamos isso de "interface" ou "tipagem estrutural".
+
+O processo prático é:
+
+Criar um arquivo chamado pensamento.ts na pasta de pensamentos
+Definir uma interface Pensamento com todos os atributos e seus tipos esperados (id como number, conteudo como string, autoria como string, modelo como string)
+Usar export para tornar a interface acessível em outras classes
+Aplicar essa tipagem em três arquivos: pensamento.component.ts, criar-pensamento.component.ts e listar-pensamento.component.ts
+Usar a sintaxe Pensamento[] para arrays de pensamentos
+O grande benefício é que o VS Code sinalizará erros automaticamente se você esquecer um atributo ou usar um tipo incorreto, garantindo que os dados sejam enviados corretamente para o back-end.
+
+- Conhecendo services
+
+A aula aborda a importância de organizar a estrutura do Angular seguindo boas práticas de programação. O componente deve conter apenas a lógica de comportamento e renderização, enquanto a lógica de negócios e comunicação com o servidor devem ficar em um arquivo separado chamado service.
+
+Para criar um service, você utiliza o comando ng g service (ou ng g s) no terminal, seguido do caminho onde deseja criá-lo. Por exemplo: ng g s componentes/pensamentos/pensamento.
+
+Esse comando gera dois arquivos: o serviço em si (pensamento.service.ts) e um arquivo de testes (pensamento.service.spec.ts).
+
+O arquivo service é uma classe TypeScript com o decorador @Injectable, que significa que ela pode ser injetada em outros componentes e classes através do método de injeção de dependências. O metadado providedIn: 'root' indica que o serviço está disponível para toda a aplicação.
+
+Dentro do service, você adicionará posteriormente os métodos do CRUD (cadastro, listagem, edição e exclusão) e toda a lógica de comunicação com o servidor, mantendo os componentes mais limpos e organizados.
+
+- Injeção de dependências
+
+A aula começa com uma analogia prática: assim como você pede comida por um aplicativo de entrega em vez de cozinhar e se responsabilizar por todo o processo, a injeção de dependências funciona de forma similar no Angular. Você não cria as dependências diretamente, mas as solicita para que sejam fornecidas.
+
+Na prática, você aprendeu a implementar isso no arquivo pensamento.service.ts adicionando o HttpClient como uma dependência. Para isso, você declara um parâmetro no construtor da classe com o modificador private e o tipo HttpClient. Dessa forma, o Angular automaticamente cria esse atributo na classe sem que você precise instanciá-lo manualmente.
+
+O código fica assim:
+
+```bash
+export class PensamentoService {
+	constructor(private http: HttpClient) { }
+}
+```
+
+Também é importante garantir que o HttpClient foi importado do módulo @angular/common/http. Com isso feito, você tem acesso a todos os métodos dessa classe para realizar operações HTTP.
+
+Em essência, você aprendeu que a injeção de dependências é um padrão de projeto onde a classe solicita dependências externas ao invés de criá-las, tornando o código mais limpo e fácil de manter.
+
+Para saber mais: Services e Injeção de dependência
+Discutir no fórum
+Injeção de dependência é um termo que pode parecer assustador para quem está iniciando na área de programação, mas não é um bicho de sete cabeças.
+
+Escrevi este artigo https://www.alura.com.br/artigos/services-injecao-dependencia-angular-o-que-sao-como-funcionam#:~:text=Sim%2C%20%C3%A9%20s%C3%B3%20isso%20mesmo,declarado%20como%20atributo%20dessa%20classe sobre Services e injeção de dependência para te ajudar a entender mais sobre esse assunto.
+
+resumo: 
+
+- Utilizar o JSON-Server simulando uma API REST;
+- Criar uma interface para definir tipos personalizados;
+- Entender a importância do Service e o novo decorator @Injectable();
+- Injetar dependências.
+
+
+# Aula 06: Requisições HTTP
+
+- Requisições com HttpClient
+
+Nesta aula, você aprendeu os conceitos fundamentais sobre requisições HTTP no Angular através de uma analogia bem interessante: comparamos as requisições HTTP com as chamadas que fazemos a um garçom em um restaurante.
+
+Os pontos principais foram:
+
+Configuração inicial: Você viu como acessar o arquivo pensamento.service.ts e criar um atributo API que armazena a URL da sua API falsa (http://localhost:3000/pensamentos).
+
+Importação do HttpClient: Para utilizar requisições HTTP, foi necessário importar o módulo HttpClientModule no arquivo app.module.ts na seção de imports.
+
+Criação do método listar: Dentro do serviço, você criou o método listar() que utiliza o método get do HttpClient para solicitar os dados da API, retornando um arranjo de pensamentos tipado como Pensamento[].
+
+Injeção de dependência: No componente listar-pensamento.component.ts, você injetou o serviço no construtor para ter acesso aos seus métodos.
+
+Chamada no ciclo de vida: Você inseriu a chamada ao método listar() dentro do ngOnInit(), que é executado quando o componente é carregado.
+
+O problema encontrado: Ao tentar executar, você recebeu uma mensagem do sistema indicando que o método deveria retornar um Observable, o que será explorado na próxima aula.
+
+- Compreendendo Observables
+
+A aula começa com uma analogia: assim como uma pessoa coloca um produto na lista de favoritos de um site para receber notificações quando o preço cai, um Observable funciona de forma similar. O Observable é como o site (que emite notificações) e o Observer é a pessoa interessada em receber essas notificações.
+
+A grande diferença entre Observable e Promise é que o Observable permite uma transferência contínua de dados, ou seja, pode emitir dados várias vezes durante sua existência. Ele faz parte da biblioteca RXJS, que já vem instalada no Angular.
+
+Na prática, você aprendeu a:
+
+Adicionar Observable no método listar() do serviço, importando-o do RXJS
+Usar o método subscribe() no componente para se "inscrever" nas notificações do Observable, similar a se inscrever em um canal do YouTube
+Implementar uma arrow function dentro do subscribe para receber e armazenar os dados da API
+Criar o método criar() no serviço usando http.post() que também retorna um Observable
+Consumir esse serviço no componente de criação
+Tornar o id opcional na interface Pensamento usando o ponto de interrogação
+Usar o router para redirecionar o usuário após salvar ou cancelar a criação de um pensamento
+Ao final, você testou o fluxo completo criando um novo pensamento pela página e verificando se ele foi salvo no banco de dados.
+
+
+- Componente Excluir
+
+Nesta aula, você aprendeu a criar o componente de exclusão de pensamentos para a sua aplicação Angular.
+
+Os principais passos foram:
+
+Nesta aula, você aprendeu a criar o componente de exclusão de pensamentos para a sua aplicação Angular.
+
+Os principais passos foram:
+*   **Criação do componente ExcluirPensamento**: Você gerou um novo componente (`excluir-pensamento`) para isolar a lógica de exclusão.
+*   **Estilização e Estrutura HTML**: Você adicionou o CSS e montou a estrutura HTML do modal de confirmação, incluindo a mensagem e os botões de "Excluir" e "Cancelar".
+*   **Implementação do serviço de exclusão**: No `pensamento.service.ts`, você criou o método `excluir(id: number)` que utiliza o `HttpClient.delete` para remover um pensamento e o método `buscarPorId(id: number)` para obter os dados de um pensamento específico.
+*   **Lógica do componente ExcluirPensamento**: No `excluir-pensamento.component.ts`, você injetou os serviços necessários (`PensamentoService`, `Router`, `ActivatedRoute`), implementou o `ngOnInit` para capturar o `id` do pensamento da rota e buscar seus dados, e criou os métodos `excluirPensamento()` e `cancelar()` para lidar com as ações do usuário no modal.
+*   **Configuração de rotas**: Você adicionou a rota para o componente `ExcluirPensamentoComponent` no `app-routing.module.ts`, incluindo um parâmetro `id`.
+*   **Integração com o cartão de pensamento**: No `pensamento.component.html`, você adicionou o `routerLink` ao botão de lixeira, direcionando para a rota de exclusão com o `id` do pensamento.
+
+Ao final, você testou a funcionalidade, confirmando que o modal de exclusão aparece e que é possível deletar ou cancelar a ação.
+
+
+
+- Componente editar
+
+Olá! Para te ajudar a fixar o conteúdo, preparei um resumo da aula "Componente Editar":
+
+Nesta aula, você aprendeu a configurar a funcionalidade de "editar" para os pensamentos, completando assim o CRUD. Para isso, foi criado o componente `editar-pensamento` usando o comando `ng g c componentes/pensamentos/editar-pensamento`.
+
+No arquivo `pensamento.service.ts`, foi adicionado o método `editar()` que utiliza o comando `put` para atualizar um pensamento existente na API.
+
+A interface da tela de edição foi construída copiando o HTML do componente `criar-pensamento` para `editar-pensamento.component.html` e fazendo as devidas alterações, como a classe da `section` e o método do botão "Salvar" para `editarPensamento()`.
+
+No arquivo `editar-pensamento.component.ts`, você declarou o atributo `pensamento` do tipo `Pensamento` e injetou os serviços `PensamentoService`, `Router` e `ActivatedRoute` no `constructor`.
+
+Dentro do `ngOnInit`, foi configurada a lógica para buscar o pensamento pelo `id` da rota e preencher os campos do formulário automaticamente.
+
+Por fim, foram implementados os métodos `editarPensamento()` para chamar o serviço de edição e redirecionar para a lista de pensamentos, e o método `cancelar()` para retornar ao mural.
+
+Para que a funcionalidade estivesse completa, você também configurou a rota para o componente `editar-pensamento` em `app-routing.module.ts` e adicionou o `routerLink` no botão de edição do `pensamento.component.html`.
+
+Ao final, a aplicação foi testada para garantir que todas as funcionalidades de edição e cancelamento estavam funcionando corretamente.
+
+Parabéns por finalizar o seu primeiro CRUD em Angular! Se tiver mais alguma dúvida sobre o conteúdo da aula, é só perguntar!
+
+resumo:
+
+- Utilizar métodos de requisição HTTP com serviço HttpClient;
+- Utilizar o Observable no retorno dos métodos HTTP;
+- Capturar parâmetros em rotas;
+- Criar um CRUD.
